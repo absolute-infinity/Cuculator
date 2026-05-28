@@ -475,9 +475,9 @@ namespace StartoriaLesson17 {
 			this->button_clear->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->button_clear->ForeColor = System::Drawing::SystemColors::ActiveBorder;
-			this->button_clear->Location = System::Drawing::Point(628, 199);
+			this->button_clear->Location = System::Drawing::Point(304, 199);
 			this->button_clear->Name = L"button_clear";
-			this->button_clear->Size = System::Drawing::Size(307, 80);
+			this->button_clear->Size = System::Drawing::Size(631, 80);
 			this->button_clear->TabIndex = 20;
 			this->button_clear->Text = L"CE";
 			this->button_clear->UseVisualStyleBackColor = false;
@@ -518,133 +518,135 @@ namespace StartoriaLesson17 {
 
 		}
 #pragma endregion
-private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {}
+	private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {}
 
-	   // Вспомогательный метод вычислений
-private: System::Void Calculate() {
-	System::String^ txt = textBox1->Text;
-	if (System::String::IsNullOrEmpty(txt)) txt = "0";
-
-	double current_num = System::Double::Parse(txt);
-	if (operation == "+") { first_num = first_num + current_num; }
-	else if (operation == "-") { first_num = first_num - current_num; }
-	else if (operation == "*") { first_num = first_num * current_num; }
-	else if (operation == "/") {
-		if (current_num == 0) {
-			MessageBox::Show("Деление на ноль невозможно.");
-			return;
-		}
-		first_num = first_num / current_num;
-	}
-	textBox1->Text = first_num.ToString();
-}
-
- private: System::Void button_digit_Click(System::String^ digit) {
-	if (is_op_clicked && textBox1->Text == "0,") {
-		textBox1->Text += digit;
-		is_op_clicked = false;
-		return;
-	}
-
-	if (textBox1->Text == "0" || is_op_clicked || is_equal_clicked) {
-		textBox1->Text = digit;
-		is_op_clicked = false;
-		if (is_equal_clicked) {
-			first_num = 0;
-			operation = "";
-			is_equal_clicked = false;
-		}
-	}
-	else {
-		textBox1->Text += digit;
-	}
-}
-
-	   // Обработка мат. знаков
-private: System::Void HandleOperation(System::String^ op) {
-	if (operation != "" && !is_op_clicked && !is_equal_clicked) {
-		Calculate();
-	}
-	else {
+		   // Вспомогательный метод вычислений
+	private: System::Void Calculate() {
 		System::String^ txt = textBox1->Text;
 		if (System::String::IsNullOrEmpty(txt)) txt = "0";
-		first_num = System::Double::Parse(txt);
-	}
-	operation = op;
-	is_op_clicked = true;
-	is_equal_clicked = false;
-}
 
-	   // Кнопка Равно (=)
-private: System::Void button14_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (operation == "") return;
-
-	System::String^ txt = textBox1->Text;
-	if (System::String::IsNullOrEmpty(txt)) txt = "0";
-
-	if (!is_equal_clicked) {
-		second_num = System::Double::Parse(txt);
-	}
-	else {
-		first_num = System::Double::Parse(txt);
+		double current_num = System::Double::Parse(txt);
+		if (operation == "+") { first_num = first_num + current_num; }
+		else if (operation == "-") { first_num = first_num - current_num; }
+		else if (operation == "*") { first_num = first_num * current_num; }
+		else if (operation == "/") {
+			if (current_num == 0) {
+				MessageBox::Show("Деление на ноль невозможно.");
+				return;
+			}
+			first_num = first_num / current_num;
+		}
+		textBox1->Text = first_num.ToString();
 	}
 
-	if (operation == "+") { first_num = first_num + second_num; }
-	else if (operation == "-") { first_num = first_num - second_num; }
-	else if (operation == "*") { first_num = first_num * second_num; }
-	else if (operation == "/") {
-		if (second_num == 0) {
-			MessageBox::Show("Деление на ноль невозможно.");
+	private: System::Void button_digit_Click(System::String^ digit) {
+		if (is_op_clicked && textBox1->Text == "0,") {
+			textBox1->Text += digit;
+			is_op_clicked = false;
 			return;
 		}
-		first_num = first_num / second_num;
+
+		if (textBox1->Text == "0" || is_op_clicked || is_equal_clicked) {
+			textBox1->Text = digit;
+			is_op_clicked = false;
+			if (is_equal_clicked) {
+				first_num = 0;
+				operation = "";
+				is_equal_clicked = false;
+			}
+		}
+		else {
+			textBox1->Text += digit;
+		}
 	}
 
-	textBox1->Text = first_num.ToString();
-	is_op_clicked = true;
-	is_equal_clicked = true;
-}
-
-private: System::Void button0_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("0"); }
-private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("1"); }
-private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("2"); }
-private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("3"); }
-private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("4"); }
-private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("5"); }
-private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("6"); }
-private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("7"); }
-private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("8"); }
-private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("9"); }
-
-private: System::Void button_plus_Click(System::Object^ sender, System::EventArgs^ e) { HandleOperation("+"); }
-private: System::Void button_minus_Click(System::Object^ sender, System::EventArgs^ e) { HandleOperation("-"); }
-private: System::Void button_multiply_Click(System::Object^ sender, System::EventArgs^ e) { HandleOperation("*"); }
-private: System::Void button_divide_Click(System::Object^ sender, System::EventArgs^ e) { HandleOperation("/"); }
-
-private: System::Void button_plusminus_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (textBox1->Text != "" && textBox1->Text != "0") {
-		double num = System::Double::Parse(textBox1->Text);
-		num = num * -1;
-		textBox1->Text = num.ToString();
-		if (is_equal_clicked) first_num = num;
-	}
-}
-
-private: System::Void button_dot_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (is_op_clicked || is_equal_clicked || textBox1->Text == "") {
-		textBox1->Text = "0,";
+		   // Обработка мат. знаков
+	private: System::Void HandleOperation(System::String^ op) {
+		if (operation != "" && !is_op_clicked && !is_equal_clicked) {
+			Calculate();
+		}
+		else {
+			System::String^ txt = textBox1->Text;
+			if (System::String::IsNullOrEmpty(txt)) txt = "0";
+			first_num = System::Double::Parse(txt);
+		}
+		operation = op;
+		is_op_clicked = true;
 		is_equal_clicked = false;
 	}
-	else if (!textBox1->Text->Contains(",")) {
-		textBox1->Text += ",";
-	}
-}
 
-private: System::Void button_clear_Click(System::Object^ sender, System::EventArgs^ e) {
-	textBox1->Text = "0";
-	first_num = 0;
-	second_num = 0;
-	operation = "";
-	is_op_clicked = false;
-	is_equal_clicked = false;
+		   // Кнопка Равно (=)
+	private: System::Void button14_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (operation == "") return;
+
+		System::String^ txt = textBox1->Text;
+		if (System::String::IsNullOrEmpty(txt)) txt = "0";
+
+		if (!is_equal_clicked) {
+			second_num = System::Double::Parse(txt);
+		}
+		else {
+			first_num = System::Double::Parse(txt);
+		}
+
+		if (operation == "+") { first_num = first_num + second_num; }
+		else if (operation == "-") { first_num = first_num - second_num; }
+		else if (operation == "*") { first_num = first_num * second_num; }
+		else if (operation == "/") {
+			if (second_num == 0) {
+				MessageBox::Show("Деление на ноль невозможно.");
+				return;
+			}
+			first_num = first_num / second_num;
+		}
+
+		textBox1->Text = first_num.ToString();
+		is_op_clicked = true;
+		is_equal_clicked = true;
+	}
+
+	private: System::Void button0_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("0"); }
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("1"); }
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("2"); }
+	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("3"); }
+	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("4"); }
+	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("5"); }
+	private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("6"); }
+	private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("7"); }
+	private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("8"); }
+	private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e) { button_digit_Click("9"); }
+
+	private: System::Void button_plus_Click(System::Object^ sender, System::EventArgs^ e) { HandleOperation("+"); }
+	private: System::Void button_minus_Click(System::Object^ sender, System::EventArgs^ e) { HandleOperation("-"); }
+	private: System::Void button_multiply_Click(System::Object^ sender, System::EventArgs^ e) { HandleOperation("*"); }
+	private: System::Void button_divide_Click(System::Object^ sender, System::EventArgs^ e) { HandleOperation("/"); }
+
+	private: System::Void button_plusminus_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (textBox1->Text != "" && textBox1->Text != "0") {
+			double num = System::Double::Parse(textBox1->Text);
+			num = num * -1;
+			textBox1->Text = num.ToString();
+			if (is_equal_clicked) first_num = num;
+		}
+	}
+
+	private: System::Void button_dot_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (is_op_clicked || is_equal_clicked || textBox1->Text == "") {
+			textBox1->Text = "0,";
+			is_equal_clicked = false;
+		}
+		else if (!textBox1->Text->Contains(",")) {
+			textBox1->Text += ",";
+		}
+	}
+
+	private: System::Void button_clear_Click(System::Object^ sender, System::EventArgs^ e) {
+		textBox1->Text = "0";
+		first_num = 0;
+		second_num = 0;
+		operation = "";
+		is_op_clicked = false;
+		is_equal_clicked = false;
+	}
+	};
 }
